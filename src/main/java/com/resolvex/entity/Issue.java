@@ -61,4 +61,5 @@ public class Issue {
     @JoinColumn(name = "category_id")
     private Category category;
     
+    
 }

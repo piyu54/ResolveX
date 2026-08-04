@@ -32,4 +32,6 @@ public class Department {
     @OneToMany(mappedBy="department")
     private List<User> users;
 
+    @OneToMany(mappedBy = "department")
+    private List<Category> categories;
 }
