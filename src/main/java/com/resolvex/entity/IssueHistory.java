@@ -2,9 +2,8 @@ package com.resolvex.entity;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
 
-import ch.qos.logback.core.status.Status;
+import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

@@ -1,13 +1,12 @@
 package com.resolvex.entity;
 
 import java.time.LocalDateTime;
-import java.util.Locale.Category;
+
+
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import ch.qos.logback.core.status.Status;
-import jakarta.annotation.Priority;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

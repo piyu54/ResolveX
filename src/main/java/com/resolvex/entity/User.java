@@ -32,17 +32,27 @@ public class User {
     )
     private String email;
 
+    @Column(
+        name = "password",
+        nullable = false,
+        length = 255
+    )
+    private String password;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name="department_id")
+    @JoinColumn(name = "department_id")
     private Department department;
-    // Constructors
+
+
+    // Constructor
 
     public User() {
     }
+
 
     // Getters and Setters
 
@@ -54,6 +64,7 @@ public class User {
         this.userId = userId;
     }
 
+
     public String getFirstName() {
         return firstName;
     }
@@ -61,6 +72,7 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
 
     public String getLastName() {
         return lastName;
@@ -70,6 +82,7 @@ public class User {
         this.lastName = lastName;
     }
 
+
     public String getEmail() {
         return email;
     }
@@ -78,11 +91,30 @@ public class User {
         this.email = email;
     }
 
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }
