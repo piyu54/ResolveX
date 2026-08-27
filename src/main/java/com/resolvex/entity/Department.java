@@ -2,13 +2,7 @@ package com.resolvex.entity;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "departments")
@@ -35,14 +29,8 @@ public class Department {
     @OneToMany(mappedBy = "department")
     private List<Category> categories;
 
-
-    // Constructor
-
     public Department() {
     }
-
-
-    // Getters and Setters
 
     public Long getDepartmentId() {
         return departmentId;
@@ -52,7 +40,6 @@ public class Department {
         this.departmentId = departmentId;
     }
 
-
     public String getDepartmentName() {
         return departmentName;
     }
@@ -60,7 +47,6 @@ public class Department {
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }
-
 
     public String getDescription() {
         return description;
@@ -70,7 +56,6 @@ public class Department {
         this.description = description;
     }
 
-
     public List<User> getUsers() {
         return users;
     }
@@ -78,7 +63,6 @@ public class Department {
     public void setUsers(List<User> users) {
         this.users = users;
     }
-
 
     public List<Category> getCategories() {
         return categories;

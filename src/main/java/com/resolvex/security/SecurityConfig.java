@@ -17,6 +17,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/roles/**").permitAll()
                 .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/api/departments/**").permitAll()
                 .anyRequest().authenticated()
             );
 
