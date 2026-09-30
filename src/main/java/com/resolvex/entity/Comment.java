@@ -14,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="comments")
+@Table(name = "issue_comments")
 public class Comment {
 
     @Id
@@ -34,5 +34,47 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
+    
+    
+    
+    public Long getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(Long commentId) {
+        this.commentId = commentId;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public LocalDateTime getCommentedAt() {
+        return commentedAt;
+    }
+
+    public void setCommentedAt(LocalDateTime commentedAt) {
+        this.commentedAt = commentedAt;
+    }
+
+    public Issue getIssue() {
+        return issue;
+    }
+
+    public void setIssue(Issue issue) {
+        this.issue = issue;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 }

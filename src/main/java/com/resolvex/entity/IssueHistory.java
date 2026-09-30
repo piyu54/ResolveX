@@ -38,4 +38,54 @@ public class IssueHistory {
     @ManyToOne
     @JoinColumn(name="changed_by")
     private User changedBy;
+
+	public Long getHistoryId() {
+		return historyId;
+	}
+
+	public void setHistoryId(Long historyId) {
+		this.historyId = historyId;
+	}
+
+	public Status getOldStatus() {
+		return oldStatus;
+	}
+
+	public void setOldStatus(Status oldStatus) {
+		this.oldStatus = oldStatus;
+	}
+
+	public Status getNewStatus() {
+		return newStatus;
+	}
+
+	public void setNewStatus(Status newStatus) {
+		this.newStatus = newStatus;
+	}
+
+	public LocalDateTime getChangedAt() {
+		return changedAt;
+	}
+
+	public void setChangedAt(LocalDateTime changedAt) {
+		this.changedAt = changedAt;
+	}
+
+	public Issue getIssue() {
+		return issue;
+	}
+
+	public void setIssue(Issue issue) {
+		this.issue = issue;
+	}
+
+	public User getChangedBy() {
+		return changedBy;
+	}
+
+	public void setChangedBy(User changedBy) {
+		this.changedBy = changedBy;
+	}
+    
+    
 }

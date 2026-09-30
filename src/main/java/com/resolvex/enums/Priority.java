@@ -1,4 +1,4 @@
-package com.resolvex.entity;
+package com.resolvex.enums;
 
 public enum Priority {
 

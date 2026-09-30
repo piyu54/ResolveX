@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.resolvex.dto.request.DepartmentRequest;
 import com.resolvex.dto.response.DepartmentResponse;
 import com.resolvex.service.DepartmentService;
-
+import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/departments")
 public class DepartmentController {

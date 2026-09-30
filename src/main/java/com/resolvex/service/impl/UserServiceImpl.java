@@ -1,9 +1,11 @@
 package com.resolvex.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.resolvex.dto.request.UserRequest;
 import com.resolvex.dto.response.UserResponse;
@@ -23,93 +25,80 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final DepartmentRepository departmentRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    // Constructor Injection
     public UserServiceImpl(
             UserRepository userRepository,
             RoleRepository roleRepository,
             DepartmentRepository departmentRepository,
-            UserMapper userMapper) {
+            UserMapper userMapper,
+            PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.departmentRepository = departmentRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    // CREATE USER
     @Override
     public UserResponse createUser(UserRequest request) {
+        if (request == null
+                || request.getPassword() == null
+                || request.getPassword().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Password is required");
+        }
 
         User user = userMapper.toEntity(request);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Role not found with id: "
-                                        + request.getRoleId()));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Role not found"));
 
         Department department = departmentRepository
                 .findById(request.getDepartmentId())
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Department not found with id: "
-                                        + request.getDepartmentId()));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Department not found"));
 
         user.setRole(role);
         user.setDepartment(department);
 
-        User savedUser = userRepository.save(user);
-
-        return userMapper.toResponse(savedUser);
+        return userMapper.toResponse(userRepository.save(user));
     }
 
-    // GET ALL USERS
     @Override
     public List<UserResponse> getAllUsers() {
-
-        List<User> users = userRepository.findAll();
-
-        return users.stream()
+        return userRepository.findAll()
+                .stream()
                 .map(userMapper::toResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    // GET USER BY ID
     @Override
     public UserResponse getUserById(Long userId) {
-
         User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "User not found with id: " + userId));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "User not found"));
 
         return userMapper.toResponse(user);
     }
 
-    // UPDATE USER
     @Override
-    public UserResponse updateUser(
-            Long userId,
-            UserRequest request) {
-
+    public UserResponse updateUser(Long userId, UserRequest request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "User not found with id: " + userId));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "User not found"));
 
         Role role = roleRepository.findById(request.getRoleId())
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Role not found with id: "
-                                        + request.getRoleId()));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Role not found"));
 
         Department department = departmentRepository
                 .findById(request.getDepartmentId())
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Department not found with id: "
-                                        + request.getDepartmentId()));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Department not found"));
 
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -117,19 +106,14 @@ public class UserServiceImpl implements UserService {
         user.setRole(role);
         user.setDepartment(department);
 
-        User updatedUser = userRepository.save(user);
-
-        return userMapper.toResponse(updatedUser);
+        return userMapper.toResponse(userRepository.save(user));
     }
 
-    // DELETE USER
     @Override
     public void deleteUser(Long userId) {
-
         User user = userRepository.findById(userId)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "User not found with id: " + userId));
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "User not found"));
 
         userRepository.delete(user);
     }
