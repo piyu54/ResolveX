@@ -11,6 +11,7 @@ import com.resolvex.entity.Issue;
 public interface IssueRepository extends JpaRepository<Issue, Long> {
 	
 	long countByStatus(Status status);
+	
 
 	List<Issue> findByReportedBy_UserIdOrderByCreatedAtDesc(
 	        Long userId);
