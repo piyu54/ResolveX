@@ -9,4 +9,5 @@ import com.resolvex.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmailIgnoreCase(String email);
+    
 }
